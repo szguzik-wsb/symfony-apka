@@ -1,0 +1,58 @@
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::Docker::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+docker ps - pokazuje liste kontenerow
+docker exec -it cd0cb3f47931 sh - Wejście do kontenera z uzyciem powloki sh na podstawie id kontenera (np: cd0cb3f47931)
+ctrl+D - wyjscie z terminala dockerowego
+docker-compose down - Zatrzymanie działających obrazów
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::Symfony::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+bin/console - wyswietla listw wszystkich komend, ktore mozemy uzyc
+bin/console make:entity - tworzenie encji
+bin/console make:migration - tworzenie migracji
+bin/console doctrine:migrations:migrate - puszczeanie migracji - uwaga jest ostrzrzenie ze mozesz straici dane bo leci migracja
+bin/console doctrine:schema:create - czy nasza baza danych juz jest - nie wykonuj tego polecenia na srodowisku produkcyjnym
+bin/console doctrine:migrations:status - status migracji baz itd
+bin/console doctrine:fixtures:load - zapisuje dane z fakera kasujac to co jest w bazie (zobacz fakera w sekcji composer)
+bin/console doctrine:fixtures:load --append - zapisuje dane z fakera ale zachowuje istniejace (zobacz fakera w sekcji composer)
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::Composer::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+composer require --dev symfony/maker-bundle - pomaga tworzyć puste polecenia, kontrolery, klasy formularzy,testy
+composer require orm -zawiera wszystkie rzeczy potrzebne do polaczenia z baza
+composer require --dev orm-fixtures - faker danych
+composer require --dev symfony/profiler-pack - pasek symfony (czarny na dole)
+composer require debug - narzędzia do zarządzania błędami i ułatwiają
+composer require twig/twig - system szablonów
+
+// Paczki przestarzale - zamiast tej paczki uzyj anotacji z route
+composer require sensio/framework-extra-bundle - zamiana parametrów na encje - deprecated - nie uzywac
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Przykład - umiesc kod w odpowiednich miejscach w klasie i wywolaj getery odpowiednie
+use Symfony\Component\Routing\Annotation\Route;
+    #[Route('/article/{article}', 'blog-article')]
+    public function showArticle(Article $article): Response {
+        dd($article);
+        return new Response($article->getContent());
+    }
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::POSTGRESQL::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+docker exec -it e7266d35d33b sh - za pomoca id kontenera np. e7266d35d33b trzeba wejsc na kontener postgresa
+psql -Uapp - polaczenie z baza danych
+\l - lista tabel
+\d nazwa_tabeli - "opis" tabeli (jakie kolumny itd)
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::TWIG::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+{#  #} - Zapis komentarza
+{{  }} - Tak zapisujemy wyswietlanie
+{{ dump(articles) }} - kod wyświetla wszystko z articles
+{{ dump() }} - kod wyświetla wszystko do czego twig ma dostęp
+{%  %} - Tak zapisujemy wykonywanie jakiś działań np. pętle
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::INFO::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+encje - reprezentują tabele po stronie kodu!
